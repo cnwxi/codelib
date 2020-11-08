@@ -75,11 +75,7 @@ uint get_replace(uint S)
 	}
 	return replace;
 }
-//
-void change_lru(uint S,uint E)
-{
-
-}
+//修改cache信息
 void replace(uint S,uint E,uint tag,_Bool detail)
 {
 	int i;
@@ -107,7 +103,7 @@ void replace(uint S,uint E,uint tag,_Bool detail)
 		}
 	}
 }
-
+//访问cache
 void visit_cache(uint S,uint tag,_Bool detail)
 {
 	_Bool HitOrNot=0;//标记是否命中
