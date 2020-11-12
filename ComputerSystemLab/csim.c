@@ -111,7 +111,7 @@ void visit_cache(uint S,uint tag,_Bool detail)
 	uint hit_item;//记录命中的行
 	//遍历组找到匹配的那一行
 	for(i=0; i<Cache.E; i++) {
-		if(get_tag(S,i)==tag&&get_valid(S,i)==1) { //有效值为1且tag匹配
+		if(get_valid(S,i)==1&&get_tag(S,i)==tag) { //有效值为1且tag匹配
 			HitOrNot=1;
 			hit_item=i;
 			break;
@@ -208,17 +208,11 @@ int main(int argc,char *const argv[])
 	init_Cache(s,E,b);
 	//读取trace文件，按行处理
 	while(fscanf(filepath,"%s%x%c%d",cmd,&addr,&ch_tmp,&number)!=EOF) {
-		if(detail==1) {
+		if(detail) {
 			//输出trace中的指令行
 			printf("%c %x%c%d ",cmd[0],addr,ch_tmp,number);
 		}
-
-		if(cmd[0]=='I') {
-			//I指令忽略，不做任何处理
-			if(detail)
-				printf("\n");
-			continue;
-		} else {
+		if(cmd[0]!='I') {
 			tag=addr>>(s+b);
 			S= (((1<<s)-1))&(addr>>b);
 			if(cmd[0]=='L'||cmd[0]=='S') {
@@ -230,7 +224,9 @@ int main(int argc,char *const argv[])
 				visit_cache(S,tag,detail);
 			}
 		}
-		if(detail==1)printf("\n");
+		if(detail) {
+			printf("\n");
+		}
 	}
 	destroy_all();
 	printSummary(hit, miss, eviction);
