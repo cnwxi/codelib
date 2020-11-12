@@ -212,11 +212,8 @@ int main(int argc,char *const argv[])
 			//输出trace中的指令行
 			printf("%c %x%c%d ",cmd[0],addr,ch_tmp,number);
 		}
-
 		if(cmd[0]=='I') {
 			//I指令忽略，不做任何处理
-			if(detail)
-				printf("\n");
 			continue;
 		} else {
 			tag=addr>>(s+b);
@@ -230,7 +227,7 @@ int main(int argc,char *const argv[])
 				visit_cache(S,tag,detail);
 			}
 		}
-		if(detail==1)printf("\n");
+		if(detail)printf("\n");
 	}
 	destroy_all();
 	printSummary(hit, miss, eviction);
