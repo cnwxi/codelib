@@ -111,7 +111,7 @@ void visit_cache(uint S,uint tag,_Bool detail)
 	uint hit_item;//记录命中的行
 	//遍历组找到匹配的那一行
 	for(i=0; i<Cache.E; i++) {
-		if(get_tag(S,i)==tag&&get_valid(S,i)==1) { //有效值为1且tag匹配
+		if(get_valid(S,i)==1&&get_tag(S,i)==tag) { //有效值为1且tag匹配
 			HitOrNot=1;
 			hit_item=i;
 			break;
