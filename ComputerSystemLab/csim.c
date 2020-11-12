@@ -27,7 +27,7 @@ void init_Cache(uint s,uint E,uint b)
 			Cache.cache[i][j]=(uint *)malloc(3*sizeof(uint));
 		}
 	}
-	//初始化每行的有效值、标记位、LRU计数值
+	//初始化
 	for(i=0; i<Cache.S; i++) {
 		for(j=0; j<Cache.E; j++) {
 			Cache.cache[i][j][0]=0;//有效值
@@ -151,7 +151,7 @@ int main(int argc,char *const argv[])
 	char option,ch_tmp,cmd[1];
 	int s=0,E=0,b=0,number;
 	uint addr,tag,S;
-	_Bool detail=0,error=0;
+	_Bool detail=0,error=0,command=0;
 	FILE *filepath=NULL;
 
 	while((option=getopt(argc,argv,"hvs:E:b:t:"))!=-1) {
@@ -159,7 +159,7 @@ int main(int argc,char *const argv[])
 		//atol可以将字符串转换为长整型
 		switch(option) {
 		case 'h':
-			commandlist();
+			command=1;
 			break;
 		case 'v':
 			detail=1;
@@ -200,9 +200,11 @@ int main(int argc,char *const argv[])
 	//测试
 	//printf("参数：%d %d %d %d\n",detail,s,E,b);
 	if(error==1) { //存在输入错误
-		//输出命令手册,结束运行
-		commandlist();
+		//结束运行
 		return 0;
+	}
+	if(command){
+		commandlist();
 	}
 	//初始化Cache
 	init_Cache(s,E,b);
