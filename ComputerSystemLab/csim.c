@@ -220,7 +220,7 @@ int main(int argc,char *const argv[])
 			if(cmd[0]=='L'||cmd[0]=='S') {
 				//不对L、S指令做区分，直接对valid、tag进行修改，执行结果一致
 				visit_cache(S,tag,detail);
-			} else {
+			} else if(cmd[0]=='M'){
 				//M指令=L指令+S指令
 				visit_cache(S,tag,detail);
 				visit_cache(S,tag,detail);
