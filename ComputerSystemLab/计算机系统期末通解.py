@@ -35,7 +35,7 @@ ls = ['L', 'S']
 record_hits = hits
 record_eviction = evictions
 
-file_handle = open(id+'.trace',mode='w')
+file_handle = open(id + '.trace', mode='w')
 
 if 2 ** s < sets:
     print('没有那么多组')
@@ -43,7 +43,6 @@ else:
     tmpS = 0
     tag = 0
     # 完成组访问要求
-    print('完成组访问要求')
     for i in range(sets):
         tmpS = i
         if hits > 0:
@@ -57,7 +56,6 @@ else:
     tmptag = 1
     tmpS = 0
     # 替换前提：某个组被占满
-    print('替换前提：某个组被占满')
     for j in range(E - 1):
         if hits > 0:
             cmd = 'M'
@@ -69,7 +67,6 @@ else:
         totle += 1
         tmptag += 1
     # 完成替换和命中任务
-    print('完成替换和命中要求')
     while evictions > 0:
         if hits > 0:
             cmd = 'M'
@@ -82,7 +79,6 @@ else:
         evictions -= 1
         tmptag += 1
     # 完成剩余的命中要求
-    print('完成剩余的命中要求')
     tmptag -= 1
     min_tag = tmptag - (E - 1)
     tmpb = 1
@@ -106,11 +102,11 @@ else:
         file_handle.writelines('%s %x,1\n' % (cmd, (tmptag << (b + s)) + (tmpS << b) + tmpb))
         totle += 1
     file_handle.close()
-    print('./scim -s %d -E %d -b %d -t filepath' % (s, E, b,))
+    print('\n./scim -s %d -E %d -b %d -t ./%s\n' % (s, E, b, id + '.trace'))
     print('totle=', totle)
     rate = m_count / totle
     print("m_count/totle=", format(rate, '.2f'), end=' ')
-    file_handle=open(id+'.txt',mode='w')
+    file_handle = open(id + '.txt', mode='w')
     if rate < 1 / 3:
         miss = sets + E - 1 + record_eviction
         print('< 1/3')
