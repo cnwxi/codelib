@@ -24,12 +24,12 @@ import random
 m_count = 0
 totle = 0
 
-s = 7
-E = 5
+s = 4
+E = 4
 b = 4
-hits = 17
-evictions = 33
-sets = 18
+hits = 10
+evictions = 20
+sets = 10
 id = '201826010221'
 cmd = None
 ls = ['L', 'S']
@@ -104,19 +104,30 @@ else:
         file_handle.writelines('%s %x,1\n' % (cmd, (tmptag << (b + s)) + (tmpS << b) + tmpb))
         totle += 1
     file_handle.close()
-    print('\n./scim -s %d -E %d -b %d -t ./%s\n' % (s, E, b, id + '.trace'))
+    print('**************************************************')
+    print('trace文件生成完毕')
+    print('**************************************************')
     print('totle=', totle)
     rate = m_count / totle
     print("m_count/totle=", format(rate, '.2f'), end=' ')
-    file_handle = open(id + '.txt', mode='w')
+
     if rate < 1 / 3:
         miss = sets + E - 1 + record_eviction
         print('< 1/3')
-        file_handle.writelines('要访问 %d 个组，则至少有 %d 次（冷）不命中。\n' % (sets, sets))
-        file_handle.writelines('存在替换,则有一个组的所有行都要被访问，所以（冷）不命中次数再加 %d 。\n' % (E - 1))
+        file_handle = open(id + '.txt', mode='w')
+        file_handle.writelines('s=%d,E=%d,hits=%d,evictions=%d\n' % (s, E, record_hits, record_eviction))
+        file_handle.writelines('要访问%d个组，则至少有%d次（冷）不命中。\n' % (sets, sets))
+        file_handle.writelines('存在替换,则有一个组的所有行都要被访问，所以（冷）不命中次数再加%d。\n' % (E - 1))
         file_handle.writelines('每次替换会先出现不命中，总不命中次数增加%d次。\n' % record_eviction)
         file_handle.writelines('一条指令中最多出现1次不命中。所以至少有%d条指令。\n' % miss)
-        file_handle.writelines('命中次数为%d少于不命中次数的1/3 %s。\n' % (record_hits, format(miss / 3, '.1f')))
+        file_handle.writelines('命中次数为%d少于不命中次数的1/3=%s条。\n' % (record_hits, format(miss / 3, '.1f')))
         file_handle.writelines('M操作最少都有一次命中,所以M操作最多%d条。\n' % record_hits)
         file_handle.writelines('所以无法满足M操作数至少为总操作数的1/3。\n')
-    file_handle.close()
+        file_handle.close()
+        print('**************************************************')
+        print('txt文件生成完毕')
+        print('**************************************************')
+    else:
+        print('\n**************************************************')
+    print('./scim -s %d -E %d -b %d -t ./%s' % (s, E, b, id + '.trace'))
+    print('**************************************************')
