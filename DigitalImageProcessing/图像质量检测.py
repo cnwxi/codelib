@@ -65,6 +65,29 @@ def brightness(img):
         return 0
 
 
+def bright(img):
+    refer = 128
+    img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    meangray = cv.mean(img_gray)[0]
+    mean = meangray - refer  # 平均值
+    height, weith = img_gray.shape
+    sumtemp = 0
+    for i in range(height):
+        for j in range(weith):
+            diff = img_gray[i][j] - refer
+            sumtemp += abs(img_gray[i][j] - refer - mean)
+    meandev = sumtemp / img_gray.size  # 偏差
+    if meandev < abs(mean):
+        if mean > 0:
+            print('偏亮')
+        elif mean < 0:
+            print('偏暗')
+        else:
+            print('正常')
+    else:
+        print('正常')
+
+
 # 对比度
 def contrast(img):
     img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -80,20 +103,37 @@ def contrast(img):
     return int(cg)
 
 
+def color(img):
+    img_lab = cv.cvtColor(img, cv.COLOR_BGR2Lab)
+    height, width = img_lab.shape[:2]
+    suma, sumb = 0, 0
+    for i in range(height):
+        for j in range(width):
+            suma += img_lab[i][j][1]
+            sumb += img_lab[i][j][2]
+    da = suma / img_lab.size
+    print(da)
+    db = sumb / img_lab.size
+    sumatmp,sumbtmp = 0, 0
+    for i in range(height):
+        for j in range(width):
+            sumatmp+=pow()
+
 if __name__ == '__main__':
     # imagepath = sys.argv[1]
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename()
     image = cv.imread(file_path)
-    print("相对梯度：%.2f" % (clarity(image)))
-    tmp = brightness(image)
-    print("亮度：", end='')
-    if tmp == -1:
-        print('暗')
-    elif tmp == 0:
-        print('正常')
-    else:
-        print('亮')
+    print("\n相对单位梯度：%.2f" % (clarity(image)))
+    # tmp = brightness(image)
+    # print("亮度：", end='')
+    # if tmp == -1:
+    #     print('暗')
+    # elif tmp == 0:
+    #     print('正常')
+    # else:
+    #     print('亮')
+    bright(image)
     print("对比度：%d" % (contrast(image)))
-    print("可能的噪声占比？%f%%" % (fft.run(image) * 100))
+    # print("可能的噪声占比？%f%%" % (fft.run(image) * 100))
