@@ -18,6 +18,8 @@ import random
 # evictions = int(input("evictions="))
 # # 组访问要求
 # sets = int(input("sets="))
+# # 学号
+# id = input("id=")
 
 m_count = 0
 totle = 0
