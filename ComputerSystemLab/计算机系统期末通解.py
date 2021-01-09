@@ -19,25 +19,25 @@ import random
 # # 组访问要求
 # sets = int(input("sets="))
 # # 学号
-# id = input("id=")
+# your_id = input("your_id=")
 
 m_count = 0
 totle = 0
 
-s = 4
-E = 4
+s = 7
+E = 5
 b = 4
-hits = 10
-evictions = 20
-sets = 10
-id = '201826010221'
+hits = 17
+evictions = 33
+sets = 18
+your_id = '201826010221'
 cmd = None
 ls = ['L', 'S']
 
 record_hits = hits
 record_eviction = evictions
 
-file_handle = open(id + '.trace', mode='w')
+file_handle = open(your_id + '.trace', mode='w')
 
 if 2 ** s < sets:
     print('没有那么多组')
@@ -114,7 +114,7 @@ else:
     if rate < 1 / 3:
         miss = sets + E - 1 + record_eviction
         print('< 1/3')
-        file_handle = open(id + '.txt', mode='w')
+        file_handle = open(your_id + '.txt', mode='w')
         file_handle.writelines('s=%d,E=%d,hits=%d,evictions=%d\n' % (s, E, record_hits, record_eviction))
         file_handle.writelines('要访问%d个组，则至少有%d次（冷）不命中。\n' % (sets, sets))
         file_handle.writelines('存在替换,则有一个组的所有行都要被访问，所以（冷）不命中次数再加%d。\n' % (E - 1))
@@ -129,5 +129,5 @@ else:
         print('**************************************************')
     else:
         print('\n**************************************************')
-    print('./scim -s %d -E %d -b %d -t ./%s' % (s, E, b, id + '.trace'))
+    print('./scim -s %d -E %d -b %d -t ./%s' % (s, E, b, your_id + '.trace'))
     print('**************************************************')
