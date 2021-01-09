@@ -30,7 +30,7 @@ b = 4
 hits = 17
 evictions = 33
 sets = 18
-your_id = '201826010221'
+your_id = '学号'
 cmd = None
 ls = ['L', 'S']
 
